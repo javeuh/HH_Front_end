@@ -19,7 +19,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
 
         <script type="text/babel">
-            const QuestionComponent = () => {
+            const WeatherComponent = () => {
                 const weatherApiKey = "99eabd6e730e2ae6246bb18ef52e0732";
                 const locationApiKey = "6b3325864866459cbd46bfb08f8ea5b6";
                 const [weather, setWeather] = React.useState(false);
@@ -122,7 +122,7 @@
                 return <p> Waiting for weather data & location...</p>;
             };
             ReactDOM.render(
-                <QuestionComponent />,
+                <WeatherComponent />,
                 document.getElementById("root")
             );
         </script>
