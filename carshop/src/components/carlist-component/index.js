@@ -5,6 +5,8 @@ import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import ReactTable from "react-table";
+import Addcar from "../addcar-component";
+import Editcar from "../editcar-component";
 import "react-table/react-table.css";
 
 const useStyles = makeStyles(theme => ({
@@ -56,6 +58,30 @@ const Carlist = () => {
         }
     };
 
+    const saveCar = car => {
+        fetch("https://carstockrest.herokuapp.com/cars", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(car)
+        })
+            .then(res => fetchData())
+            .catch(err => console.log(err));
+    };
+
+    const updateCar = (car, link) => {
+        fetch(link, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(car)
+        })
+            .then(res => fetchData())
+            .catch(err => console.log(err));
+    };
+
     const columns = [
         {
             Header: "Brand",
@@ -84,12 +110,21 @@ const Carlist = () => {
         {
             sortable: false,
             filterable: false,
-            Header: "Action",
+            Header: "Edit",
+            width: 100,
+            Cell: row => (
+                <Editcar carToEdit={row.original} updateCar={updateCar} />
+            )
+        },
+        {
+            sortable: false,
+            filterable: false,
+            Header: "Delete",
             width: 100,
             accessor: "_links.self.href",
-            Cell: row => (
+            Cell: ({ value }) => (
                 <Button
-                    onClick={() => deleteCar(row.value)}
+                    onClick={() => deleteCar(value)}
                     size="small"
                     color="secondary"
                 >
@@ -101,6 +136,7 @@ const Carlist = () => {
 
     return (
         <div>
+            <Addcar saveCar={saveCar} />
             <ReactTable filterable={true} data={cars} columns={columns} />
             <Snackbar
                 anchorOrigin={{
