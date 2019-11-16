@@ -6,12 +6,12 @@ import "react-table/react-table.css";
 import Headertext from "../header-text-component";
 
 const Trainings = () => {
-    const url = "https://customerrest.herokuapp.com/api/trainings";
+    const url = "https://customerrest.herokuapp.com/gettrainings";
     const [trainings, setTrainings] = useState([]);
 
     const fetchData = () => {
         axios.get(url).then(res => {
-            setTrainings(res.data.content);
+            setTrainings(res.data);
         });
     };
 
@@ -20,6 +20,14 @@ const Trainings = () => {
             Header: "Date and time",
             accessor: "date",
             Cell: ({ value }) => moment(value).format("MMM Do YYYY, h:mm a")
+        },
+        {
+            Header: "First Name",
+            accessor: "customer.firstname"
+        },
+        {
+            Header: "Last Name",
+            accessor: "customer.lastname"
         },
         {
             Header: "Duration (min)",
