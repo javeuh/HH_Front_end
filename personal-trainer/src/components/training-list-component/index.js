@@ -49,7 +49,7 @@ const Trainings = () => {
             <div>
                 <Headertext headerText="Fetching trainings..."></Headertext>
                 <div className="row">
-                    <div class="lds-dual-ring text-center"></div>
+                    <div class="lds-dual-ring"></div>
                 </div>
             </div>
         );
